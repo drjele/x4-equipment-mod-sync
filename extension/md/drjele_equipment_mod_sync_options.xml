@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mdscript name="DrJele_EquipmentModSyncOptions" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="md.xsd">
+    <cues>
+
+        <cue name="RegisterOptions" instantiate="true" version="1">
+            <conditions>
+                <event_cue_signalled cue="md.Simple_Menu_Options.Reloaded"/>
+            </conditions>
+            <actions>
+                <signal_cue_instantly
+                        cue="md.Simple_Menu_Options.Register_Option"
+                        param="table[
+            $id        = 'drjele_equipment_mod_sync_default_on_toggle',
+            $category  = 'Equipment Mod Sync',
+            $name      = 'Checkbox ticked on open',
+            $mouseover = 'Whether the Apply to all checkbox on the Modify screen starts ticked each time the screen opens. Ticking or unticking it on the screen lasts until the screen closes.',
+            $type      = 'button',
+            $default   = 0,
+            $callback  = OnDefaultOnChanged,
+            ]"/>
+                <signal_cue_instantly
+                        cue="md.Simple_Menu_Options.Register_Option"
+                        param="table[
+            $id        = 'drjele_equipment_mod_sync_replace_toggle',
+            $category  = 'Equipment Mod Sync',
+            $name      = 'Replace a different mod',
+            $mouseover = 'What applying to all does with a slot that already holds a different mod. On replaces it, the same as dismantling it by hand first. Off leaves that slot alone.',
+            $type      = 'button',
+            $default   = 1,
+            $callback  = OnReplaceChanged,
+            ]"/>
+                <signal_cue_instantly
+                        cue="md.Simple_Menu_Options.Register_Option"
+                        param="table[
+            $id        = 'drjele_equipment_mod_sync_match_bonus_toggle',
+            $category  = 'Equipment Mod Sync',
+            $name      = 'Match bonus effects',
+            $mouseover = 'A mod picks its bonus effects at random from a pool, so two slots can end up with different ones. On rerolls every other slot for free until its bonus effects are the same as the clicked slot. Off leaves them as rolled.',
+            $type      = 'button',
+            $default   = 1,
+            $callback  = OnMatchBonusChanged,
+            ]"/>
+                <signal_cue_instantly
+                        cue="md.Simple_Menu_Options.Register_Option"
+                        param="table[
+            $id        = 'drjele_equipment_mod_sync_match_attempts_rerolls',
+            $category  = 'Equipment Mod Sync',
+            $name      = 'Free rerolls per slot',
+            $mouseover = 'How many free rerolls a slot gets to match the clicked slot bonus effects before it is left as it is.',
+            $type      = 'slidercell',
+            $default   = 100,
+            $args      = table[$min = 10, $max = 500, $step = 10, $suffix = ' rerolls'],
+            $callback  = OnMatchAttemptsChanged,
+            ]"/>
+                <signal_cue_instantly
+                        cue="md.Simple_Menu_Options.Register_Option"
+                        param="table[
+            $id        = 'drjele_equipment_mod_sync_debug',
+            $category  = 'Equipment Mod Sync',
+            $name      = 'Debug logging',
+            $mouseover = 'Writes every batch to the debug log: what it applied, skipped and matched, and the credits and materials the paid slots and the free rerolls each used.',
+            $type      = 'button',
+            $default   = 0,
+            $callback  = OnDebugChanged,
+            ]"/>
+            </actions>
+        </cue>
+
+        <cue name="OnDefaultOnChanged" instantiate="true">
+            <conditions>
+                <event_cue_signalled/>
+            </conditions>
+            <actions>
+                <set_value name="player.entity.$DrJeleEquipmentModSyncDefaultOn" exact="if event.param.$value then 1 else 0"/>
+            </actions>
+        </cue>
+
+        <cue name="OnReplaceChanged" instantiate="true">
+            <conditions>
+                <event_cue_signalled/>
+            </conditions>
+            <actions>
+                <set_value name="player.entity.$DrJeleEquipmentModSyncReplace" exact="if event.param.$value then 1 else 0"/>
+            </actions>
+        </cue>
+
+        <cue name="OnMatchBonusChanged" instantiate="true">
+            <conditions>
+                <event_cue_signalled/>
+            </conditions>
+            <actions>
+                <set_value name="player.entity.$DrJeleEquipmentModSyncMatchBonus" exact="if event.param.$value then 1 else 0"/>
+            </actions>
+        </cue>
+
+        <cue name="OnMatchAttemptsChanged" instantiate="true">
+            <conditions>
+                <event_cue_signalled/>
+            </conditions>
+            <actions>
+                <set_value name="player.entity.$DrJeleEquipmentModSyncMatchAttempts" exact="event.param.$value"/>
+            </actions>
+        </cue>
+
+        <cue name="OnDebugChanged" instantiate="true">
+            <conditions>
+                <event_cue_signalled/>
+            </conditions>
+            <actions>
+                <set_value name="player.entity.$DrJeleEquipmentModSyncDebug" exact="if event.param.$value then 1 else 0"/>
+            </actions>
+        </cue>
+
+    </cues>
+</mdscript>

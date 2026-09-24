@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon name="drjele_equipment_mod_sync" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../core/coreaddon.xsd">
+    <environment type="menus">
+        <file name="ui/drjele_equipment_mod_sync.lua"/>
+        <dependency name="ego_detailmonitorHelper"/>
+        <dependency name="ego_detailmonitor"/>
+    </environment>
+</addon>
